@@ -1,8 +1,22 @@
-# .NET Core Coding Skills
+# Coding Skills
 
-A collection of skills covering .NET Core best practices — refactoring style, architecture, EF Core, and unit testing.
+A collection of skills covering .NET Core best practices and general engineering methodology.
 
 ## Skills
+
+### [`tidy`](tidy/SKILL.md)
+
+Applies Kent Beck's *Tidy First?* methodology — separate structural changes from behavioral changes and sequence them deliberately.
+
+| Rule | Summary |
+|------|---------|
+| Never mix tidying and feature work | Structural and behavioral changes must be in separate commits |
+| Tidy first / after / not at all | Decide based on whether the change will be clearer or safer after tidying |
+| 15 tidyings | Guard Clauses, Explaining Variables, Extract Helper, Dead Code, Cohesion Order, and more |
+| One tidy per commit | Small, reversible, reviewable in minutes |
+| Stop on bug discovery | File the bug — don't fix mid-tidy |
+
+---
 
 ### [`dotnet-refactor`](dotnet-refactor/SKILL.md)
 
