@@ -1,23 +1,83 @@
-核心面向
+# .NET Core Coding Skills
 
-  重構
+A collection of skills covering .NET Core best practices — refactoring style, architecture, EF Core, and unit testing.
 
-  1. 方法 / 類別重構 — 消除 God Class、提取 Service、命名規範（C# 慣例）
-  2. 依賴注入重構 — 正確使用 DI lifetime（Singleton / Scoped / Transient）、避免 Service Locator
+## Skills
 
-  架構
+### [`dotnet-refactor`](dotnet-refactor/SKILL.md)
 
-  3. 分層架構 — Controller → Service → Repository，各層職責與邊界
-  4. Clean Architecture — Use Case / Domain / Infrastructure 在 .NET 專案結構的實踐
-  5. CQRS — MediatR 的使用方式、Command / Query 分離
+Refactoring rules for .NET Core C# projects following James's style.
 
-  .NET 特定
+| Rule | Summary |
+|------|---------|
+| No private methods | Extract a class or inline the expression |
+| No private static methods | Move to the type that owns the data |
+| Method ≤ 5 responsibilities | Split or extract a Decorator |
+| Parameters > 2 | Extract into a DTO record |
+| Complex pre-conditions | Decorator pattern |
+| Conditional branch implementations | Strategy pattern |
+| Pure service / domain layer | No framework imports — depend only on interfaces |
+| Business logic | Fluent method chaining |
+| Variable assignment | Declare and assign in one statement |
+| Model conversions | `To...()` instance methods on the source model |
+| DI lifetimes | Never inject Scoped/Transient into a Singleton |
 
-  6. EF Core 最佳實踐 — 查詢最佳化、N+1、Migration 管理、DbContext lifetime
-  7. Middleware / Filter / Attribute — 橫切關注點的正確位置
-  8. 錯誤處理 — Global Exception Handler、Problem Details（RFC 7807）、Result Pattern
+---
 
-  品質
+### [`dotnet-architecture`](dotnet-architecture/SKILL.md)
 
-  9. 測試策略 — xUnit、Moq、Integration Test with WebApplicationFactory
-  10. API 設計 — Minimal API vs Controller、版本管理、Swagger 整合
+Layered architecture for .NET Core projects.
+
+```
+Controller
+    ↓
+Application Service
+    ↓
+Domain Service  ←→  Repository / Proxy
+```
+
+| Layer | Responsibility |
+|-------|---------------|
+| Controller | Parse HTTP request → assemble input DTO → map result to ViewModel |
+| Application Service | Orchestration only — no business rules |
+| Domain Service | Business rules — depends on Repository/Proxy interfaces |
+| Repository | Persistence abstraction — returns Aggregates |
+| Proxy | External API abstraction — returns DTOs |
+
+Cross-cutting concerns: **Action Filters** for API pre-conditions, **Middleware** for global pipeline behavior (exception handling, logging, CORS).
+
+---
+
+### [`dotnet-efcore`](dotnet-efcore/SKILL.md)
+
+EF Core best practices.
+
+| Rule | Summary |
+|------|---------|
+| EF only in Repository | No EF references in Service or Domain layers |
+| Scoped DbContext | Always register as `Scoped` |
+| Disable lazy loading | `UseLazyLoadingProxies(false)` |
+| `AsNoTracking()` on reads | All read-only queries must opt out of change tracking |
+| No `IQueryable` outside Repository | Never leak query composition across layer boundaries |
+| `SaveChanges` via Unit of Work only | Repositories stage — `IUnitOfWork.CommitAsync()` commits |
+| One migration per logical change | Named after business intent, not timestamps |
+| No auto-migrate — ever | `MigrateAsync()` and `EnsureCreatedAsync()` are banned |
+
+---
+
+### [`dotnet-unit-test`](dotnet-unit-test/SKILL.md)
+
+Unit testing style for .NET Core projects.
+
+**Stack:** TUnit + NSubstitute + FluentAssertions (pinned 7.2.2)
+
+| Rule | Summary |
+|------|---------|
+| One assertion per test | Exactly one `Should()` call per test method |
+| Naming: `Method_Scenario_ExpectedBehavior` | Test name is the specification |
+| AAA structure | Arrange / Act / Assert separated by blank lines |
+| Mock only external dependencies | Repositories, HTTP clients — not domain objects |
+| Test public API only | Never test private or internal members |
+| `Given...` prefix | Methods that set up mock return values |
+| `Create...` prefix | Methods that instantiate the SUT or test data |
+| Setup in `[Before(Test)]` | SUT and interfaces declared and initialized there |
