@@ -2,9 +2,32 @@
 
 A collection of skills covering .NET Core best practices and general engineering methodology.
 
+## Installation
+
+Install from GitHub in Claude Code (two steps):
+
+```
+/plugin marketplace add https://github.com/CodeMachine0121/DotNet-Developing-Skills
+/plugin install coding-skills@CodeMachine0121-DotNet-Developing-Skills
+```
+
+## Usage
+
+Each skill is independently invocable via the `Skill` tool. Claude will automatically trigger the relevant skill based on context — for example, when refactoring .NET code, `dotnet-refactor` activates; when writing tests, `dotnet-unit-test` activates.
+
+You can also invoke a skill explicitly by name:
+
+| Skill | When to use |
+|-------|-------------|
+| `dotnet-refactor` | Refactoring C# code or reviewing design against James's style |
+| `dotnet-architecture` | Designing or reviewing .NET Core project layer structure |
+| `dotnet-efcore` | Implementing or reviewing EF Core usage |
+| `dotnet-unit-test` | Writing or reviewing unit tests in .NET Core |
+| `tidy` | About to change code and the structure feels messy |
+
 ## Skills
 
-### [`tidy`](tidy/SKILL.md)
+### [`tidy`](skills/tidy/SKILL.md)
 
 Applies Kent Beck's *Tidy First?* methodology — separate structural changes from behavioral changes and sequence them deliberately.
 
@@ -18,7 +41,7 @@ Applies Kent Beck's *Tidy First?* methodology — separate structural changes fr
 
 ---
 
-### [`dotnet-refactor`](dotnet-refactor/SKILL.md)
+### [`dotnet-refactor`](skills/dotnet-refactor/SKILL.md)
 
 Refactoring rules for .NET Core C# projects following James's style.
 
@@ -38,7 +61,7 @@ Refactoring rules for .NET Core C# projects following James's style.
 
 ---
 
-### [`dotnet-architecture`](dotnet-architecture/SKILL.md)
+### [`dotnet-architecture`](skills/dotnet-architecture/SKILL.md)
 
 Layered architecture for .NET Core projects.
 
@@ -62,7 +85,7 @@ Cross-cutting concerns: **Action Filters** for API pre-conditions, **Middleware*
 
 ---
 
-### [`dotnet-efcore`](dotnet-efcore/SKILL.md)
+### [`dotnet-efcore`](skills/dotnet-efcore/SKILL.md)
 
 EF Core best practices.
 
@@ -79,7 +102,7 @@ EF Core best practices.
 
 ---
 
-### [`dotnet-unit-test`](dotnet-unit-test/SKILL.md)
+### [`dotnet-unit-test`](skills/dotnet-unit-test/SKILL.md)
 
 Unit testing style for .NET Core projects.
 

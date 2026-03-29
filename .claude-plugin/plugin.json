@@ -1,0 +1,11 @@
+{
+  "name": "coding-skills",
+  "description": "A collection of skills covering .NET Core best practices and general engineering methodology, including architecture, EF Core, refactoring, unit testing, and tidy-first principles.",
+  "version": "1.0.0",
+  "author": {
+    "name": "James Hsueh",
+    "email": "asdfg55887@gmail.com"
+  },
+  "homepage": "https://github.com/CodeMachine0121/DotNet-Developing-Skills",
+  "keywords": ["dotnet", "csharp", "refactoring", "tdd", "efcore", "architecture", "tidy"]
+}
